@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e3a8a"/>
+    </linearGradient>
+    <linearGradient id="phone" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#60a5fa"/>
+      <stop offset="100%" stop-color="#a78bfa"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" fill="url(#bg2)"/>
+  <rect x="155" y="60" width="90" height="180" rx="14" fill="url(#phone)" opacity="0.95"/>
+  <rect x="167" y="78" width="66" height="118" rx="4" fill="#0f172a" opacity="0.85"/>
+  <polygon points="190,120 190,160 220,140" fill="#60a5fa"/>
+  <circle cx="200" cy="220" r="3" fill="#0f172a"/>
+  <text x="50%" y="72%" font-family="ui-monospace, monospace" font-size="46"
+        font-weight="700" fill="#fff" text-anchor="middle" dominant-baseline="central">ducopc</text>
+  <text x="50%" y="84%" font-family="ui-sans-serif, system-ui, sans-serif" font-size="20"
+        font-weight="600" fill="#a78bfa" text-anchor="middle" dominant-baseline="central">STUDIO</text>
+  <text x="50%" y="94%" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14"
+        font-weight="500" fill="#fff" opacity="0.6" text-anchor="middle" dominant-baseline="central">TikTok / Shorts · 9:16</text>
+</svg>

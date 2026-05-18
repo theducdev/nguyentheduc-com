@@ -5,24 +5,31 @@ const SITE = 'https://nguyentheduc.com';
 
 export const GET: APIRoute = async () => {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
-  const sortedPosts = posts.sort(
-    (a, b) => b.data.pubDatetime.valueOf() - a.data.pubDatetime.valueOf()
-  );
+  const products = await getCollection('products', ({ data }) => !data.draft && !data.externalLink);
 
   const staticUrls = [
     { loc: `${SITE}/`, priority: '1.0', changefreq: 'weekly' },
     { loc: `${SITE}/posts/`, priority: '0.9', changefreq: 'weekly' },
+    { loc: `${SITE}/products/`, priority: '0.9', changefreq: 'weekly' },
     { loc: `${SITE}/about/`, priority: '0.7', changefreq: 'monthly' },
   ];
 
-  const postUrls = sortedPosts.map((post) => ({
-    loc: `${SITE}/posts/${post.slug}/`,
-    lastmod: post.data.pubDatetime.toISOString(),
+  const postUrls = posts
+    .sort((a, b) => b.data.pubDatetime.valueOf() - a.data.pubDatetime.valueOf())
+    .map((post) => ({
+      loc: `${SITE}/posts/${post.slug}/`,
+      lastmod: post.data.pubDatetime.toISOString(),
+      priority: '0.8',
+      changefreq: 'monthly',
+    }));
+
+  const productUrls = products.map((p) => ({
+    loc: `${SITE}/products/${p.slug}/`,
     priority: '0.8',
     changefreq: 'monthly',
   }));
 
-  const urls = [...staticUrls, ...postUrls];
+  const urls = [...staticUrls, ...postUrls, ...productUrls];
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

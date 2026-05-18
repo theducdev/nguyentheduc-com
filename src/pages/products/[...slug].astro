@@ -1,0 +1,30 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const products = await getCollection('products', ({ data }) => !data.draft && !data.externalLink);
+  return products.map((p) => ({
+    params: { slug: p.slug },
+    props: { product: p },
+  }));
+}
+
+const { product } = Astro.props;
+const { Content } = await product.render();
+---
+
+<BaseLayout title={`${product.data.title} | Sản phẩm | Nguyễn Thế Đức`} description={product.data.description}>
+  <article class="prose">
+    <img src={product.data.thumbnail} alt={product.data.title}
+         style="width: 100%; max-height: 320px; object-fit: cover; border-radius: 8px; margin-bottom: 1.5rem;" />
+    <h1>{product.data.title}</h1>
+    <p style="font-size: 1.1rem; opacity: 0.85;">{product.data.description}</p>
+    <hr style="margin: 2rem 0;" />
+    <Content />
+  </article>
+
+  <div class="all-posts-link" style="margin-top: 3rem;">
+    <a href="/products">← Quay lại danh sách sản phẩm</a>
+  </div>
+</BaseLayout>

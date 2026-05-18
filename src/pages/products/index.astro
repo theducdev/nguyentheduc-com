@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const all = await getCollection('products', ({ data }) => !data.draft);
+const sorted = all.sort((a, b) => a.data.order - b.data.order);
+
+const STATUS_LABEL: Record<string, { label: string; color: string }> = {
+  live: { label: 'Live', color: '#16a34a' },
+  beta: { label: 'Beta', color: '#d97706' },
+  wip: { label: 'Đang phát triển', color: '#0284c7' },
+  paused: { label: 'Tạm dừng', color: '#6b7280' },
+};
+---
+
+<BaseLayout title="Sản phẩm | Nguyễn Thế Đức" description="Các sản phẩm và dự án của Nguyễn Thế Đức.">
+  <h1 class="page-heading">Sản phẩm</h1>
+  <p class="page-subheading">Những sản phẩm và công cụ mình đang xây.</p>
+
+  <ul class="product-list">
+    {
+      sorted.map((p) => {
+        const status = STATUS_LABEL[p.data.status];
+        const href = p.data.externalLink ?? `/products/${p.slug}`;
+        const isExternal = !!p.data.externalLink;
+        return (
+          <li class="product-item">
+            <a href={href}
+               target={isExternal ? '_blank' : undefined}
+               rel={isExternal ? 'noopener noreferrer' : undefined}
+               class="product-link">
+              <img src={p.data.thumbnail} alt={p.data.title} class="product-thumb" loading="lazy" />
+              <div class="product-info">
+                <div class="product-title-row">
+                  <h3 class="product-title">{p.data.title}</h3>
+                  <span class="product-status" style={`--status-color:${status.color}`}>
+                    <span class="dot" /> {status.label}
+                  </span>
+                </div>
+                <p class="product-desc">{p.data.description}</p>
+              </div>
+            </a>
+          </li>
+        );
+      })
+    }
+  </ul>
+</BaseLayout>
