@@ -1,3 +1,0 @@
-# Cloudflare Pages redirects
-# Redirect www → apex (SEO best practice)
-https://www.nguyentheduc.com/* https://nguyentheduc.com/:splat 301!
