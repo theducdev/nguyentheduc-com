@@ -5,7 +5,7 @@ export const SITE = {
   title: 'Nguyễn Thế Đức',
   role: 'CEO / Co-Founder TECHLA AI',
   desc: 'Nguyễn Thế Đức — CEO/Co-Founder TECHLA AI. Chia sẻ về AI, tự động hoá và phát triển sản phẩm.',
-  ogImage: '/avatar.jpg',
+  ogImage: '/og-default.jpg',
   lightAndDarkMode: false,
   postPerIndex: 10,
   postPerPage: 10,

@@ -27,7 +27,15 @@ const status = STATUS_LABEL[d.status];
 const saleActive = !!(d.saleEndsAt && d.saleEndsAt.getTime() > Date.now());
 ---
 
-<BaseLayout title={`${d.title} | Sản phẩm | Nguyễn Thế Đức`} description={d.description}>
+<BaseLayout
+  title={`${d.title} | Sản phẩm | Nguyễn Thế Đức`}
+  description={d.description}
+  ogImage={d.thumbnail}
+  ogImageAlt={d.title}
+  ogImageWidth={1024}
+  ogImageHeight={1024}
+  ogType="product"
+>
   <article class="prose">
     <img src={d.thumbnail} alt={d.title}
          style="width: 100%; max-height: 360px; object-fit: cover; border-radius: 12px; margin-bottom: 1.5rem; background: var(--muted);" />
