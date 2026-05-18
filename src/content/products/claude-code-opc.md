@@ -37,4 +37,6 @@ Khoá học này không dạy bạn lý thuyết — dạy bạn **làm thật**
 
 ## Khi nào mở bán?
 
-Đang hoàn thiện nội dung. Đăng ký ở nút trên hoặc inbox [Facebook](https://www.facebook.com/duckhoinghiep) để nhận thông báo + ưu đãi early-bird **giảm 50%** (chỉ 499k thay vì 999k).
+Đang hoàn thiện nội dung. Đăng ký mua trước **22/05/2026** chỉ với **199.000đ** — giảm thêm **60%** so với giá early-bird 499.000đ (giá gốc khi ra mắt: 999.000đ).
+
+Inbox [Facebook](https://www.facebook.com/duckhoinghiep) nếu cần tư vấn thêm.
