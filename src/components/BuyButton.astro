@@ -52,8 +52,10 @@ const dialogId = `buy-${productSlug}`;
     <h2 class="buy-modal-title">{productTitle}</h2>
     <p class="buy-modal-sub">Quét QR bằng app ngân hàng để chuyển khoản tự động:</p>
 
-    <img src={currentQR} alt={`QR thanh toán ${productTitle}`} class="buy-modal-qr"
-         data-qr-img width="280" height="280" loading="lazy" />
+    <div class="buy-modal-qr-wrap">
+      <img src={currentQR} alt={`QR thanh toán ${productTitle}`} class="buy-modal-qr"
+           data-qr-img width="280" height="280" loading="lazy" />
+    </div>
 
     <div class="buy-modal-info">
       <div class="buy-info-row"><span>Ngân hàng</span><strong>{PAYMENT.bank}</strong></div>
