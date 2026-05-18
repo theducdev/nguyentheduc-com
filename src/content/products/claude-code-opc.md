@@ -5,11 +5,10 @@ thumbnail: /products/claude-code-opc.jpg
 status: wip
 price: "499.000đ"
 priceAmount: 499000
-priceNote: "Giá gốc 999.000đ"
-salePrice: "199.000đ"
-salePriceAmount: 199000
-saleEndsAt: 2026-05-22T00:00:00+07:00
-saleNote: "Đăng ký trước 22/05/2026 - giảm thêm 60%"
+salePrice: "299.000đ"
+salePriceAmount: 299000
+saleEndsAt: 2026-05-21T00:00:00+07:00
+saleNote: "Đăng ký trước 21/05/2026 - giảm còn 299k"
 transferContent: "MUA CLAUDECODE OPC"
 buyLabel: "Mua ngay"
 order: 1
@@ -37,6 +36,6 @@ Khoá học này không dạy bạn lý thuyết — dạy bạn **làm thật**
 
 ## Khi nào mở bán?
 
-Đang hoàn thiện nội dung. Đăng ký mua trước **22/05/2026** chỉ với **199.000đ** — giảm thêm **60%** so với giá early-bird 499.000đ (giá gốc khi ra mắt: 999.000đ).
+Đang hoàn thiện nội dung. Đăng ký mua trước **21/05/2026** chỉ với **299.000đ** — tiết kiệm **200k** so với giá chính thức 499.000đ.
 
 Inbox [Facebook](https://www.facebook.com/duckhoinghiep) nếu cần tư vấn thêm.

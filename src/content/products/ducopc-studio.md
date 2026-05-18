@@ -6,10 +6,10 @@ status: beta
 price: "399.000đ"
 priceAmount: 399000
 priceNote: "License cá nhân, dùng vĩnh viễn + update miễn phí 1 năm"
-salePrice: "199.000đ"
-salePriceAmount: 199000
-saleEndsAt: 2026-05-22T00:00:00+07:00
-saleNote: "Mua trước 22/05/2026 - giảm còn 199k"
+salePrice: "299.000đ"
+salePriceAmount: 299000
+saleEndsAt: 2026-05-21T00:00:00+07:00
+saleNote: "Mua trước 21/05/2026 - giảm còn 299k"
 transferContent: "MUA DUCOPC STUDIO"
 buyLabel: "Mua ngay"
 order: 2
