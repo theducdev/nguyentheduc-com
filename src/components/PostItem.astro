@@ -1,0 +1,37 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  pubDatetime: Date;
+  readingTime?: string;
+  description: string;
+}
+
+const { href, title, pubDatetime, readingTime, description } = Astro.props;
+
+const formatted = new Intl.DateTimeFormat('vi-VN', {
+  day: 'numeric',
+  month: 'short',
+  year: 'numeric',
+}).format(pubDatetime);
+---
+
+<li class="post-item">
+  <a href={href} class="post-title-link">
+    <h3 class="post-title">{title}</h3>
+  </a>
+  <div class="post-meta">
+    <span style="display:inline-flex; align-items:center; gap:0.5rem;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
+        <path d="M16 3v4" />
+        <path d="M8 3v4" />
+        <path d="M4 11h16" />
+      </svg>
+      <time datetime={pubDatetime.toISOString()}>{formatted}</time>
+    </span>
+    {readingTime && <span>• {readingTime}</span>}
+  </div>
+  <p class="post-desc">{description}</p>
+</li>

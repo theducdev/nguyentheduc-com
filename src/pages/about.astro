@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Socials from '../components/Socials.astro';
+import { SITE, COMMUNITIES } from '../config';
+---
+
+<BaseLayout title="Giới thiệu | Nguyễn Thế Đức" description="Đôi nét về Nguyễn Thế Đức — CEO/Co-Founder TECHLA AI.">
+  <article class="prose">
+    <h1>Giới thiệu</h1>
+
+    <p>
+      Chào bạn, mình là <strong>Nguyễn Thế Đức</strong> — <strong>CEO / Co-Founder TECHLA AI</strong>.
+      Mình tập trung vào xây dựng các công cụ AI và tự động hoá quy trình giúp doanh nghiệp Việt
+      tăng năng suất, giảm chi phí vận hành.
+    </p>
+
+    <h2>Cộng đồng mình đang xây</h2>
+    <ul>
+      {
+        COMMUNITIES.map((c) => (
+          <li>
+            <a href={c.href} target="_blank" rel="noopener noreferrer">
+              <strong>{c.name}</strong>
+            </a>{' '}
+            ({c.members}) — {c.desc}
+          </li>
+        ))
+      }
+    </ul>
+
+    <h2>Công cụ mình hay dùng</h2>
+    <ul>
+      <li>Claude Code, ChatGPT cho mọi tác vụ lập trình</li>
+      <li>n8n cho các workflow tự động</li>
+      <li>Next.js, Astro, Supabase cho web</li>
+      <li>VS Code, Ghostty terminal</li>
+    </ul>
+
+    <h2>Liên hệ</h2>
+    <ul>
+      <li>Email: <a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+      <li>Zalo / Điện thoại: <a href={`tel:${SITE.phone}`}>{SITE.phone}</a></li>
+    </ul>
+
+    <Socials />
+  </article>
+</BaseLayout>

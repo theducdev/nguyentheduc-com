@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostItem from '../../components/PostItem.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const sorted = allPosts.sort(
+  (a, b) => b.data.pubDatetime.valueOf() - a.data.pubDatetime.valueOf()
+);
+---
+
+<BaseLayout title="Bài viết | Nguyễn Thế Đức" description="Toàn bộ các bài viết của Nguyễn Thế Đức về lập trình, AI và phát triển sản phẩm.">
+  <h1 class="page-heading">Bài viết</h1>
+  <p class="page-subheading">Tất cả những gì mình đã viết.</p>
+
+  <ul class="post-list">
+    {
+      sorted.map((post) => (
+        <PostItem
+          href={`/posts/${post.slug}`}
+          title={post.data.title}
+          pubDatetime={post.data.pubDatetime}
+          readingTime={post.data.readingTime}
+          description={post.data.description}
+        />
+      ))
+    }
+  </ul>
+</BaseLayout>

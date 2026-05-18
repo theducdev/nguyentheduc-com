@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import PostItem from '../components/PostItem.astro';
+import { getCollection } from 'astro:content';
+import { SITE } from '../config';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const sorted = allPosts.sort(
+  (a, b) => b.data.pubDatetime.valueOf() - a.data.pubDatetime.valueOf()
+);
+const recent = sorted.slice(0, SITE.postPerIndex);
+---
+
+<BaseLayout>
+  <Hero />
+
+  <section class="recent-posts">
+    <h2>Bài viết gần đây</h2>
+    <ul class="post-list">
+      {
+        recent.map((post) => (
+          <PostItem
+            href={`/posts/${post.slug}`}
+            title={post.data.title}
+            pubDatetime={post.data.pubDatetime}
+            readingTime={post.data.readingTime}
+            description={post.data.description}
+          />
+        ))
+      }
+    </ul>
+  </section>
+
+  <div class="all-posts-link">
+    <a href="/posts">
+      Xem tất cả bài viết
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12l14 0" />
+        <path d="M13 18l6 -6" />
+        <path d="M13 6l6 6" />
+      </svg>
+    </a>
+  </div>
+</BaseLayout>

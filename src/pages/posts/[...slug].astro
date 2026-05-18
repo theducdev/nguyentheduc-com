@@ -1,0 +1,36 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+const formatted = new Intl.DateTimeFormat('vi-VN', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+}).format(post.data.pubDatetime);
+---
+
+<BaseLayout title={`${post.data.title} | Nguyễn Thế Đức`} description={post.data.description}>
+  <article class="prose">
+    <h1>{post.data.title}</h1>
+    <div class="post-meta" style="margin-bottom: 2rem;">
+      <time datetime={post.data.pubDatetime.toISOString()}>{formatted}</time>
+      {post.data.readingTime && <span>• {post.data.readingTime}</span>}
+    </div>
+    <Content />
+  </article>
+
+  <div class="all-posts-link" style="margin-top: 3rem;">
+    <a href="/posts">← Quay lại danh sách bài viết</a>
+  </div>
+</BaseLayout>
