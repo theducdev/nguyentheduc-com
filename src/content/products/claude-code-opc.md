@@ -3,8 +3,8 @@ title: "Claude Code cho Doanh nghiệp 1 người"
 description: Khoá học giúp bạn vận hành "doanh nghiệp 1 người" bằng Claude Code — tự động hoá toàn bộ công việc, scale doanh thu mà không cần thuê team.
 thumbnail: /products/claude-code-opc.jpg
 status: wip
-price: "499.000đ"
-priceAmount: 499000
+price: "1.299.000đ"
+priceAmount: 1299000
 salePrice: "299.000đ"
 salePriceAmount: 299000
 saleEndsAt: 2026-05-21T00:00:00+07:00
@@ -36,6 +36,6 @@ Khoá học này không dạy bạn lý thuyết — dạy bạn **làm thật**
 
 ## Khi nào mở bán?
 
-Đang hoàn thiện nội dung. Đăng ký mua trước **21/05/2026** chỉ với **299.000đ** — tiết kiệm **200k** so với giá chính thức 499.000đ.
+Đang hoàn thiện nội dung. Đăng ký mua trước **21/05/2026** chỉ với **299.000đ** — tiết kiệm **1.000.000đ** so với giá chính thức 1.299.000đ.
 
 Inbox [Facebook](https://www.facebook.com/duckhoinghiep) nếu cần tư vấn thêm.
