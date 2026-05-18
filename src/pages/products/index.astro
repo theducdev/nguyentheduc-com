@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BuyButton from '../../components/BuyButton.astro';
+import SaleCountdown from '../../components/SaleCountdown.astro';
 import { getCollection } from 'astro:content';
 
 const all = await getCollection('products', ({ data }) => !data.draft);
@@ -12,17 +13,41 @@ const STATUS_LABEL: Record<string, { label: string; color: string }> = {
   wip: { label: 'Đang phát triển', color: '#0284c7' },
   paused: { label: 'Tạm dừng', color: '#6b7280' },
 };
+
+// Check if any product has sale active for banner
+const now = Date.now();
+const hasAnySale = sorted.some(
+  (p) => p.data.saleEndsAt && p.data.saleEndsAt.getTime() > now,
+);
+const earliestSaleEnd = sorted
+  .filter((p) => p.data.saleEndsAt && p.data.saleEndsAt.getTime() > now)
+  .sort((a, b) => a.data.saleEndsAt!.getTime() - b.data.saleEndsAt!.getTime())[0]?.data.saleEndsAt;
 ---
 
 <BaseLayout title="Sản phẩm | Nguyễn Thế Đức" description="Các sản phẩm và dự án của Nguyễn Thế Đức.">
   <h1 class="page-heading">Sản phẩm</h1>
   <p class="page-subheading">Những sản phẩm và công cụ mình đang xây.</p>
 
+  {
+    hasAnySale && earliestSaleEnd && (
+      <div class="sale-banner">
+        <div class="sale-banner-inner">
+          <div class="sale-banner-text">
+            <strong>🎉 Ưu đãi ra mắt</strong>
+            <p>Tất cả sản phẩm chỉ <strong class="sale-banner-price">199.000đ</strong> khi đăng ký trước 22/05/2026</p>
+          </div>
+          <SaleCountdown endsAt={earliestSaleEnd} size="md" />
+        </div>
+      </div>
+    )
+  }
+
   <ul class="product-list">
     {
       sorted.map((p) => {
         const status = STATUS_LABEL[p.data.status];
         const detailHref = `/products/${p.slug}`;
+        const saleActive = p.data.saleEndsAt && p.data.saleEndsAt.getTime() > now;
         return (
           <li class="product-item">
             <a href={detailHref} class="product-link">
@@ -37,9 +62,18 @@ const STATUS_LABEL: Record<string, { label: string; color: string }> = {
                 <p class="product-desc">{p.data.description}</p>
                 {
                   p.data.price && (
-                    <div class="product-price-row">
-                      <span class="product-price">{p.data.price}</span>
-                      {p.data.priceNote && <span class="product-price-note">— {p.data.priceNote}</span>}
+                    <div class="price-block" data-sale-ends={p.data.saleEndsAt?.toISOString()}>
+                      {saleActive && p.data.salePrice ? (
+                        <>
+                          <span class="sale-only product-sale-price">{p.data.salePrice}</span>
+                          <span class="sale-only product-old-price">{p.data.price}</span>
+                        </>
+                      ) : (
+                        <span class="product-price">{p.data.price}</span>
+                      )}
+                      {p.data.priceNote && (
+                        <span class="product-price-note regular-only">— {p.data.priceNote}</span>
+                      )}
                     </div>
                   )
                 }
@@ -52,6 +86,8 @@ const STATUS_LABEL: Record<string, { label: string; color: string }> = {
                     productSlug={p.slug}
                     productTitle={p.data.title}
                     amount={p.data.priceAmount}
+                    saleAmount={p.data.salePriceAmount}
+                    saleEndsAt={p.data.saleEndsAt}
                     transferContent={p.data.transferContent}
                     label={p.data.buyLabel}
                     buttonClass="btn-buy"

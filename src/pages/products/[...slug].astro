@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BuyButton from '../../components/BuyButton.astro';
+import SaleCountdown from '../../components/SaleCountdown.astro';
 
 export async function getStaticPaths() {
   const products = await getCollection('products', ({ data }) => !data.draft);
@@ -22,6 +23,8 @@ const STATUS_LABEL: Record<string, { label: string; color: string }> = {
   paused: { label: 'Tạm dừng', color: '#6b7280' },
 };
 const status = STATUS_LABEL[d.status];
+
+const saleActive = !!(d.saleEndsAt && d.saleEndsAt.getTime() > Date.now());
 ---
 
 <BaseLayout title={`${d.title} | Sản phẩm | Nguyễn Thế Đức`} description={d.description}>
@@ -37,18 +40,34 @@ const status = STATUS_LABEL[d.status];
     </div>
     <p style="font-size: 1.1rem; opacity: 0.85; margin-top: 0.25rem;">{d.description}</p>
 
+    {saleActive && d.saleEndsAt && (
+      <SaleCountdown endsAt={d.saleEndsAt} note={d.saleNote} size="lg" />
+    )}
+
     {
       (d.price || d.priceAmount) && (
-        <div class="buy-card">
+        <div class="buy-card price-block" data-sale-ends={d.saleEndsAt?.toISOString()}>
           <div class="buy-price-block">
-            {d.price && <span class="buy-price">{d.price}</span>}
-            {d.priceNote && <span class="buy-price-note">{d.priceNote}</span>}
+            {saleActive && d.salePrice ? (
+              <>
+                <span class="sale-only buy-sale-price">{d.salePrice}</span>
+                <span class="sale-only buy-old-price">{d.price}</span>
+                {d.saleNote && <span class="buy-price-note sale-only">{d.saleNote}</span>}
+              </>
+            ) : (
+              <>
+                {d.price && <span class="buy-price">{d.price}</span>}
+                {d.priceNote && <span class="buy-price-note">{d.priceNote}</span>}
+              </>
+            )}
           </div>
           {d.priceAmount ? (
             <BuyButton
               productSlug={product.slug}
               productTitle={d.title}
               amount={d.priceAmount}
+              saleAmount={d.salePriceAmount}
+              saleEndsAt={d.saleEndsAt}
               transferContent={d.transferContent}
               label={d.buyLabel}
               buttonClass="btn-buy-large"
@@ -74,6 +93,8 @@ const status = STATUS_LABEL[d.status];
             productSlug={`${product.slug}-bottom`}
             productTitle={d.title}
             amount={d.priceAmount}
+            saleAmount={d.salePriceAmount}
+            saleEndsAt={d.saleEndsAt}
             transferContent={d.transferContent}
             label={d.buyLabel}
             buttonClass="btn-buy-large"

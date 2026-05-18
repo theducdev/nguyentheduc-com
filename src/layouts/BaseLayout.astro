@@ -57,5 +57,99 @@ const ogImageURL = new URL(ogImage, Astro.site).toString();
       </div>
     </main>
     <Footer />
+
+    <script>
+      // ===== Buy dialog open/close =====
+      function bindDialogs() {
+        document.querySelectorAll('[data-buy-open]').forEach((btn) => {
+          if ((btn as HTMLElement).dataset.bound) return;
+          (btn as HTMLElement).dataset.bound = '1';
+          btn.addEventListener('click', () => {
+            const id = btn.getAttribute('data-buy-open');
+            const dialog = id ? document.getElementById(id) : null;
+            if (dialog instanceof HTMLDialogElement) dialog.showModal();
+          });
+        });
+        document.querySelectorAll('[data-buy-close]').forEach((btn) => {
+          if ((btn as HTMLElement).dataset.bound) return;
+          (btn as HTMLElement).dataset.bound = '1';
+          btn.addEventListener('click', () => {
+            const d = btn.closest('dialog');
+            if (d instanceof HTMLDialogElement) d.close();
+          });
+        });
+        document.querySelectorAll('dialog.buy-modal').forEach((d) => {
+          if ((d as HTMLElement).dataset.bound) return;
+          (d as HTMLElement).dataset.bound = '1';
+          d.addEventListener('click', (e) => {
+            if (e.target === d && d instanceof HTMLDialogElement) d.close();
+          });
+        });
+      }
+
+      // ===== Countdown + sale revert =====
+      const pad = (n: number) => String(n).padStart(2, '0');
+
+      function tickCountdowns() {
+        const now = Date.now();
+        let anyExpired = false;
+        document.querySelectorAll<HTMLElement>('.sale-countdown[data-sale-ends]').forEach((el) => {
+          const ends = new Date(el.dataset.saleEnds || '').getTime();
+          const diff = ends - now;
+          if (diff <= 0) {
+            el.classList.add('expired');
+            el.style.display = 'none';
+            anyExpired = true;
+            return;
+          }
+          const d = Math.floor(diff / 86400000);
+          const h = Math.floor((diff % 86400000) / 3600000);
+          const m = Math.floor((diff % 3600000) / 60000);
+          const s = Math.floor((diff % 60000) / 1000);
+          const dEl = el.querySelector('[data-d]');
+          const hEl = el.querySelector('[data-h]');
+          const mEl = el.querySelector('[data-m]');
+          const sEl = el.querySelector('[data-s]');
+          if (dEl) dEl.textContent = String(d);
+          if (hEl) hEl.textContent = pad(h);
+          if (mEl) mEl.textContent = pad(m);
+          if (sEl) sEl.textContent = pad(s);
+        });
+
+        // Revert sale UI / QR if expired (idempotent)
+        document.querySelectorAll<HTMLElement>('[data-sale-ends]').forEach((el) => {
+          const ends = new Date(el.dataset.saleEnds || '').getTime();
+          if (ends - now > 0) return;
+          // Mark expired
+          el.classList.add('sale-expired');
+          // Swap QR + amount in BuyButton dialogs
+          if (el.tagName === 'DIALOG') {
+            const regularQR = el.dataset.regularQr;
+            const regularAmount = el.dataset.regularAmount;
+            const img = el.querySelector<HTMLImageElement>('[data-qr-img]');
+            const amt = el.querySelector<HTMLElement>('[data-qr-amount]');
+            if (img && regularQR) img.src = regularQR;
+            if (amt && regularAmount) {
+              amt.textContent = parseInt(regularAmount, 10).toLocaleString('vi-VN') + 'đ';
+            }
+          }
+        });
+
+        // Toggle sale-price / regular-price displays anywhere
+        document.querySelectorAll<HTMLElement>('.price-block[data-sale-ends]').forEach((el) => {
+          const ends = new Date(el.dataset.saleEnds || '').getTime();
+          if (ends - now <= 0) el.classList.add('sale-expired');
+        });
+      }
+
+      function init() {
+        bindDialogs();
+        tickCountdowns();
+      }
+
+      init();
+      setInterval(tickCountdowns, 1000);
+      document.addEventListener('astro:after-swap', init);
+    </script>
   </body>
 </html>

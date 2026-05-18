@@ -1,0 +1,21 @@
+---
+interface Props {
+  endsAt: Date;
+  note?: string;
+  size?: 'sm' | 'md' | 'lg';
+}
+
+const { endsAt, note, size = 'md' } = Astro.props;
+const iso = endsAt.toISOString();
+---
+
+<div class={`sale-countdown sale-countdown-${size}`} data-sale-ends={iso}>
+  <span class="sale-badge">🔥 SALE</span>
+  {note && <span class="sale-note">{note}</span>}
+  <span class="countdown-time" aria-live="polite">
+    <span class="ct-unit"><strong data-d>0</strong><i>ngày</i></span>
+    <span class="ct-unit"><strong data-h>00</strong><i>giờ</i></span>
+    <span class="ct-unit"><strong data-m>00</strong><i>phút</i></span>
+    <span class="ct-unit"><strong data-s>00</strong><i>giây</i></span>
+  </span>
+</div>

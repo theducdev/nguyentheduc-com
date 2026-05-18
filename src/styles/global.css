@@ -668,6 +668,162 @@ hr {
   text-underline-offset: 3px;
 }
 
+/* === Sale banner & countdown === */
+
+.sale-banner {
+  background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+  border: 1px solid #fb923c;
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0 2rem 0;
+  color: #7c2d12;
+}
+
+.sale-banner-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.sale-banner-text {
+  flex: 1;
+  min-width: 220px;
+}
+
+.sale-banner-text strong:first-child {
+  font-size: 1.1rem;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.sale-banner-text p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.sale-banner-price {
+  color: #c2410c;
+  font-size: 1.05rem;
+}
+
+.sale-countdown {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.sale-countdown.sale-countdown-md,
+.sale-countdown.sale-countdown-lg {
+  background: rgba(234, 88, 12, 0.08);
+  border: 1px solid rgba(234, 88, 12, 0.3);
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+}
+
+.sale-countdown.sale-countdown-lg {
+  margin: 1rem 0 0 0;
+  padding: 0.75rem 1rem;
+}
+
+.sale-badge {
+  background: #ea580c;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.sale-note {
+  font-size: 0.85rem;
+  color: #c2410c;
+  font-weight: 500;
+}
+
+.countdown-time {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: #c2410c;
+}
+
+.ct-unit {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.1rem;
+}
+
+.ct-unit strong {
+  font-size: 1.05rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.ct-unit i {
+  font-style: normal;
+  font-size: 0.7rem;
+  font-weight: 500;
+  opacity: 0.75;
+  margin-right: 0.15rem;
+}
+
+.sale-countdown.sale-countdown-lg .ct-unit strong {
+  font-size: 1.5rem;
+}
+
+.sale-countdown.expired {
+  display: none;
+}
+
+/* === Sale prices (list page) === */
+
+.product-sale-price {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ea580c;
+}
+
+.product-old-price {
+  font-size: 0.85rem;
+  text-decoration: line-through;
+  opacity: 0.6;
+  margin-left: 0.5rem;
+}
+
+/* === Sale prices (detail page card) === */
+
+.buy-sale-price {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #ea580c;
+  line-height: 1;
+}
+
+.buy-old-price {
+  font-size: 1rem;
+  text-decoration: line-through;
+  opacity: 0.6;
+  margin-left: 0.5rem;
+}
+
+/* When sale expires, hide sale-only, show regular */
+.price-block .sale-only { display: inline; }
+.price-block .regular-only { display: none; }
+.price-block.sale-expired .sale-only { display: none; }
+.price-block.sale-expired .regular-only { display: inline; }
+
+/* Dark mode hint for sale banner (optional, light theme by default) */
+@media (prefers-color-scheme: dark) {
+  /* keep light banner — looks fine on dark too */
+}
+
 .buy-price-block {
   display: flex;
   flex-direction: column;

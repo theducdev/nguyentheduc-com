@@ -5,7 +5,11 @@ thumbnail: /products/claude-code-opc.jpg
 status: wip
 price: "499.000đ"
 priceAmount: 499000
-priceNote: "Ưu đãi early-bird, giá gốc 999.000đ"
+priceNote: "Giá gốc 999.000đ"
+salePrice: "199.000đ"
+salePriceAmount: 199000
+saleEndsAt: 2026-05-22T00:00:00+07:00
+saleNote: "Đăng ký trước 22/05/2026 - giảm thêm 60%"
 transferContent: "MUA CLAUDECODE OPC"
 buyLabel: "Mua ngay"
 order: 1
