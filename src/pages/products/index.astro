@@ -21,14 +21,10 @@ const STATUS_LABEL: Record<string, { label: string; color: string }> = {
     {
       sorted.map((p) => {
         const status = STATUS_LABEL[p.data.status];
-        const href = p.data.externalLink ?? `/products/${p.slug}`;
-        const isExternal = !!p.data.externalLink;
+        const detailHref = `/products/${p.slug}`;
         return (
           <li class="product-item">
-            <a href={href}
-               target={isExternal ? '_blank' : undefined}
-               rel={isExternal ? 'noopener noreferrer' : undefined}
-               class="product-link">
+            <a href={detailHref} class="product-link">
               <img src={p.data.thumbnail} alt={p.data.title} class="product-thumb" loading="lazy" />
               <div class="product-info">
                 <div class="product-title-row">
@@ -38,8 +34,25 @@ const STATUS_LABEL: Record<string, { label: string; color: string }> = {
                   </span>
                 </div>
                 <p class="product-desc">{p.data.description}</p>
+                {
+                  p.data.price && (
+                    <div class="product-price-row">
+                      <span class="product-price">{p.data.price}</span>
+                      {p.data.priceNote && <span class="product-price-note">— {p.data.priceNote}</span>}
+                    </div>
+                  )
+                }
               </div>
             </a>
+            {
+              p.data.buyLink && (
+                <div class="product-cta">
+                  <a href={p.data.buyLink} target="_blank" rel="noopener noreferrer" class="btn-buy">
+                    {p.data.buyLabel}
+                  </a>
+                </div>
+              )
+            }
           </li>
         );
       })

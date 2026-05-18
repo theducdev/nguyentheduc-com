@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 export async function getStaticPaths() {
-  const products = await getCollection('products', ({ data }) => !data.draft && !data.externalLink);
+  const products = await getCollection('products', ({ data }) => !data.draft);
   return products.map((p) => ({
     params: { slug: p.slug },
     props: { product: p },
@@ -12,19 +12,69 @@ export async function getStaticPaths() {
 
 const { product } = Astro.props;
 const { Content } = await product.render();
+const d = product.data;
+
+const STATUS_LABEL: Record<string, { label: string; color: string }> = {
+  live: { label: 'Live', color: '#16a34a' },
+  beta: { label: 'Beta', color: '#d97706' },
+  wip: { label: 'Đang phát triển', color: '#0284c7' },
+  paused: { label: 'Tạm dừng', color: '#6b7280' },
+};
+const status = STATUS_LABEL[d.status];
 ---
 
-<BaseLayout title={`${product.data.title} | Sản phẩm | Nguyễn Thế Đức`} description={product.data.description}>
+<BaseLayout title={`${d.title} | Sản phẩm | Nguyễn Thế Đức`} description={d.description}>
   <article class="prose">
-    <img src={product.data.thumbnail} alt={product.data.title}
-         style="width: 100%; max-height: 320px; object-fit: cover; border-radius: 8px; margin-bottom: 1.5rem;" />
-    <h1>{product.data.title}</h1>
-    <p style="font-size: 1.1rem; opacity: 0.85;">{product.data.description}</p>
+    <img src={d.thumbnail} alt={d.title}
+         style="width: 100%; max-height: 360px; object-fit: cover; border-radius: 12px; margin-bottom: 1.5rem; background: var(--muted);" />
+
+    <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 0.5rem;">
+      <h1 style="margin: 0;">{d.title}</h1>
+      <span class="product-status" style={`--status-color:${status.color}`}>
+        <span class="dot" /> {status.label}
+      </span>
+    </div>
+    <p style="font-size: 1.1rem; opacity: 0.85; margin-top: 0.25rem;">{d.description}</p>
+
+    {
+      (d.price || d.buyLink) && (
+        <div class="buy-card">
+          {d.price && (
+            <div class="buy-price-block">
+              <span class="buy-price">{d.price}</span>
+              {d.priceNote && <span class="buy-price-note">{d.priceNote}</span>}
+            </div>
+          )}
+          {d.buyLink && (
+            <a href={d.buyLink} target={d.buyLink.startsWith('http') ? '_blank' : undefined}
+               rel={d.buyLink.startsWith('http') ? 'noopener noreferrer' : undefined}
+               class="btn-buy-large">
+              {d.buyLabel}
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:0.4rem;">
+                <path d="M5 12h14" /><path d="M13 6l6 6l-6 6" />
+              </svg>
+            </a>
+          )}
+        </div>
+      )
+    }
+
     <hr style="margin: 2rem 0;" />
     <Content />
+
+    {
+      d.buyLink && (
+        <div style="text-align: center; margin: 3rem 0 1rem 0;">
+          <a href={d.buyLink} target="_blank" rel="noopener noreferrer" class="btn-buy-large">
+            {d.buyLabel}
+          </a>
+        </div>
+      )
+    }
   </article>
 
-  <div class="all-posts-link" style="margin-top: 3rem;">
+  <div class="all-posts-link" style="margin-top: 2rem;">
     <a href="/products">← Quay lại danh sách sản phẩm</a>
   </div>
 </BaseLayout>
