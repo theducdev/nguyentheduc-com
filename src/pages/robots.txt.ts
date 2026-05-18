@@ -3,7 +3,7 @@ import type { APIRoute } from 'astro';
 const robotsTxt = `User-agent: *
 Allow: /
 
-Sitemap: https://nguyentheduc.com/sitemap-index.xml
+Sitemap: https://nguyentheduc.com/sitemap.xml
 `;
 
 export const GET: APIRoute = () =>

@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="404 — Không tìm thấy trang | Nguyễn Thế Đức" description="Trang bạn tìm không tồn tại.">
+  <section style="text-align: center; padding: 4rem 1rem;">
+    <h1 style="font-size: 6rem; font-weight: 700; margin: 0; color: var(--accent); line-height: 1;">
+      404
+    </h1>
+    <p style="font-size: 1.5rem; margin: 1rem 0 0.5rem 0; font-weight: 600;">
+      Trang này không có ở đây.
+    </p>
+    <p style="opacity: 0.8; max-width: 30rem; margin: 0 auto 2rem auto;">
+      Có thể link đã cũ, hoặc bạn gõ sai đường dẫn. Cùng quay về trang chính nhé.
+    </p>
+
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem;">
+      <a
+        href="/"
+        style="color: var(--accent); text-decoration: underline; text-decoration-style: dashed; text-underline-offset: 4px; font-weight: 500;"
+      >
+        ← Về trang chủ
+      </a>
+      <a
+        href="/posts"
+        style="color: var(--accent); text-decoration: underline; text-decoration-style: dashed; text-underline-offset: 4px; font-weight: 500;"
+      >
+        Xem tất cả bài viết →
+      </a>
+    </div>
+  </section>
+</BaseLayout>
