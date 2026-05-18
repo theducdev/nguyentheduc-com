@@ -1,7 +1,7 @@
 ---
 title: "ducopc Studio"
 description: Local studio tạo video TikTok / Shorts 9:16 từ slide HTML — không cần API key, Claude Code viết script, Edge TTS + Playwright render thành MP4.
-thumbnail: /products/ducopc-studio.svg
+thumbnail: /products/ducopc-studio.jpg
 status: beta
 price: "Miễn phí"
 priceNote: "Sẽ open-source sau khi hoàn thiện docs"
