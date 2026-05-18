@@ -1,7 +1,7 @@
 ---
-title: "Claude Code Nhập Môn"
-description: Khoá học setup Claude Code từ A → Z dành cho người không code. Tặng kèm bộ toolkit thực chiến mình đang dùng hàng ngày.
-thumbnail: /products/claude-code-nhap-mon.svg
+title: "Claude Code cho Doanh nghiệp 1 người"
+description: Khoá học giúp bạn vận hành "doanh nghiệp 1 người" bằng Claude Code — tự động hoá toàn bộ công việc, scale doanh thu mà không cần thuê team.
+thumbnail: /products/claude-code-opc.jpg
 status: wip
 price: "499.000đ"
 priceNote: "Ưu đãi early-bird, giá gốc 999.000đ"
@@ -10,20 +10,26 @@ buyLabel: "Đăng ký nhận thông báo"
 order: 1
 ---
 
+## Khoá học dành cho ai?
+
+- **Solopreneur / freelancer cao cấp** muốn scale doanh thu mà không cần thuê người
+- **Founder** đang làm 1 mình, muốn tự build MVP, sales funnel, automation
+- **Chủ doanh nghiệp nhỏ** muốn AI thay 80% công việc lặp lại
+- Bạn **không cần biết code** — chỉ cần biết gõ tiếng Việt
+
 ## Bạn sẽ học được gì?
 
-- **Setup A → Z**: Cài Claude Code đúng cách trên Windows / macOS, không cần đụng terminal phức tạp.
-- **Cách "ra lệnh" cho Claude hiệu quả**: Viết prompt thế nào, khi nào nên cho Claude tự đi và khi nào nên dừng.
-- **Toolkit của mình**: Bộ subagents, slash commands, MCP servers đóng gói sẵn — cài 1 lệnh là dùng được.
-- **Case study thực tế**: Cách mình dùng Claude Code build website này, build app cho khách, tự động hoá công việc cá nhân — kể cả không biết code.
+- **Setup A → Z**: Cài Claude Code đúng cách trên Windows / macOS — không cần đụng terminal phức tạp.
+- **AI thay bạn ra lệnh cho máy tính**: Cách "ra lệnh" tiếng Việt để Claude tự build website, viết content, gửi email, làm báo cáo, automation Zalo / Telegram.
+- **Toolkit của mình**: Bộ subagents, slash commands, MCP servers mình đang dùng hàng ngày — đóng gói sẵn, cài 1 lệnh.
+- **Case study thật từ TECHLA AI**: Cách 1 mình mình vận hành website, 2 cộng đồng ~1.7k thành viên, làm sản phẩm AI bán được tiền — toàn bằng Claude Code.
 
-## Phù hợp với ai?
+## Vì sao "Doanh nghiệp 1 người" là tương lai?
 
-- Người làm marketing, sales, vận hành muốn tự động hoá công việc bằng AI
-- Founder / chủ doanh nghiệp nhỏ muốn build MVP mà không phải thuê dev
-- Lập trình viên mới bắt đầu, muốn có lộ trình rõ ràng để dùng AI hiệu quả
+Sam Altman (CEO OpenAI) từng nói: **"Doanh nghiệp tỷ đô đầu tiên do 1 người vận hành đang đến rất gần"**. Với AI agent đủ mạnh, bạn không cần team 20 người để làm việc của 20 người nữa.
+
+Khoá học này không dạy bạn lý thuyết — dạy bạn **làm thật** bằng công cụ mạnh nhất hiện tại: Claude Code.
 
 ## Khi nào mở bán?
 
-Đang hoàn thiện nội dung. Đăng ký ở nút trên hoặc inbox [Facebook](https://www.facebook.com/duckhoinghiep)
-để nhận thông báo & ưu đãi early-bird.
+Đang hoàn thiện nội dung. Đăng ký ở nút trên hoặc inbox [Facebook](https://www.facebook.com/duckhoinghiep) để nhận thông báo + ưu đãi early-bird **giảm 50%** (chỉ 499k thay vì 999k).

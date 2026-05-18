@@ -3,15 +3,17 @@ title: "ducopc Studio"
 description: Local studio tạo video TikTok / Shorts 9:16 từ slide HTML — không cần API key, Claude Code viết script, Edge TTS + Playwright render thành MP4.
 thumbnail: /products/ducopc-studio.jpg
 status: beta
-price: "Miễn phí"
-priceNote: "Sẽ open-source sau khi hoàn thiện docs"
+price: "399.000đ"
+priceNote: "License cá nhân, dùng vĩnh viễn + update miễn phí 1 năm"
+buyLink: "https://www.facebook.com/duckhoinghiep"
+buyLabel: "Mua ngay"
 order: 2
 ---
 
 ## ducopc Studio là gì?
 
-Studio chạy hoàn toàn local để biến slide HTML thành video TikTok / Shorts dọc 9:16, không cần API
-key của Gemini hay Anthropic.
+Studio chạy hoàn toàn **local** để biến slide HTML thành video TikTok / Shorts dọc 9:16 —
+không cần API key của Gemini hay Anthropic, không phụ thuộc cloud service.
 
 ## Workflow
 
@@ -20,6 +22,13 @@ key của Gemini hay Anthropic.
 3. **Edge TTS** (miễn phí, tiếng Việt tự nhiên) sinh audio
 4. **Playwright** render slide + audio → `final_video.mp4`
 
+## Vì sao chọn ducopc Studio?
+
+- **Không cần API key trả phí** — Edge TTS miễn phí, Playwright local
+- **Tiếng Việt tự nhiên** với 6+ giọng đọc Microsoft đã được tinh chỉnh
+- **Template sẵn** — 6 starter templates cho TikTok content phổ biến
+- **Workflow agent-friendly** — Claude Code làm phần lớn việc, bạn chỉ duyệt và publish
+
 ## Stack
 
 - Next.js 16 dashboard (UI + API routes)
@@ -27,6 +36,12 @@ key của Gemini hay Anthropic.
 - Python render pipeline (CLI: `render`, `tts`, `validate`, `split`)
 - SQLite + Edge TTS + Playwright Chromium
 
-## Status
+## Bao gồm
 
-Đang ở giai đoạn beta nội bộ. Sẽ open-source sau khi hoàn thiện docs.
+- ✅ Mã nguồn đầy đủ (Next.js + Python pipeline)
+- ✅ 6 starter templates
+- ✅ Hướng dẫn cài đặt Windows / macOS / Linux
+- ✅ Update miễn phí 1 năm
+- ✅ Hỗ trợ qua Zalo group VIP
+
+Inbox [Facebook](https://www.facebook.com/duckhoinghiep) để nhận license + hướng dẫn cài.
