@@ -1,0 +1,87 @@
+---
+import { PAYMENT, SITE } from '../config';
+
+interface Props {
+  productSlug: string;
+  productTitle: string;
+  amount: number;
+  transferContent?: string;
+  label?: string;
+  buttonClass?: string;
+}
+
+const {
+  productSlug,
+  productTitle,
+  amount,
+  transferContent = `MUA ${productSlug.replace(/-/g, '').toUpperCase()}`,
+  label = 'Mua ngay',
+  buttonClass = 'btn-buy-large',
+} = Astro.props;
+
+const qrUrl = `${PAYMENT.qrApi}?acc=${PAYMENT.account}&bank=${PAYMENT.bank}&amount=${amount}&des=${encodeURIComponent(transferContent)}`;
+const dialogId = `buy-${productSlug}`;
+const amountFormatted = amount.toLocaleString('vi-VN') + 'đ';
+---
+
+<button class={buttonClass} data-buy-open={dialogId} type="button">
+  {label}
+</button>
+
+<dialog id={dialogId} class="buy-modal" aria-label={`Mua ${productTitle}`}>
+  <button class="buy-modal-close" data-buy-close aria-label="Đóng">×</button>
+
+  <div class="buy-modal-content">
+    <h2 class="buy-modal-title">{productTitle}</h2>
+    <p class="buy-modal-sub">Quét QR bằng app ngân hàng để chuyển khoản tự động:</p>
+
+    <img src={qrUrl} alt={`QR thanh toán ${productTitle}`} class="buy-modal-qr"
+         width="280" height="280" loading="lazy" />
+
+    <div class="buy-modal-info">
+      <div class="buy-info-row"><span>Ngân hàng</span><strong>{PAYMENT.bank}</strong></div>
+      <div class="buy-info-row"><span>Số tài khoản</span><strong>{PAYMENT.account}</strong></div>
+      <div class="buy-info-row"><span>Chủ tài khoản</span><strong>{PAYMENT.accountName}</strong></div>
+      <div class="buy-info-row"><span>Số tiền</span><strong class="amount">{amountFormatted}</strong></div>
+      <div class="buy-info-row"><span>Nội dung CK</span><strong>{transferContent}</strong></div>
+    </div>
+
+    <p class="buy-modal-after">
+      Sau khi chuyển khoản, inbox
+      <a href="https://www.facebook.com/duckhoinghiep" target="_blank" rel="noopener noreferrer">Facebook</a>
+      hoặc Zalo <a href={`tel:${SITE.phone}`}>{SITE.phone}</a>
+      kèm ảnh chuyển khoản để nhận sản phẩm.
+    </p>
+  </div>
+</dialog>
+
+<script>
+  function setupBuyDialog() {
+    document.querySelectorAll('[data-buy-open]').forEach((btn) => {
+      if ((btn as HTMLElement).dataset.buyBound) return;
+      (btn as HTMLElement).dataset.buyBound = '1';
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-buy-open');
+        const dialog = id ? document.getElementById(id) : null;
+        if (dialog instanceof HTMLDialogElement) dialog.showModal();
+      });
+    });
+    document.querySelectorAll('[data-buy-close]').forEach((btn) => {
+      if ((btn as HTMLElement).dataset.buyBound) return;
+      (btn as HTMLElement).dataset.buyBound = '1';
+      btn.addEventListener('click', () => {
+        const dialog = btn.closest('dialog');
+        if (dialog instanceof HTMLDialogElement) dialog.close();
+      });
+    });
+    document.querySelectorAll('dialog.buy-modal').forEach((d) => {
+      if ((d as HTMLElement).dataset.buyBound) return;
+      (d as HTMLElement).dataset.buyBound = '1';
+      d.addEventListener('click', (e) => {
+        if (e.target === d && d instanceof HTMLDialogElement) d.close();
+      });
+    });
+  }
+  setupBuyDialog();
+  document.addEventListener('astro:after-swap', setupBuyDialog);
+</script>

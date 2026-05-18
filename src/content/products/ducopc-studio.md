@@ -4,8 +4,9 @@ description: Local studio tạo video TikTok / Shorts 9:16 từ slide HTML — k
 thumbnail: /products/ducopc-studio.jpg
 status: beta
 price: "399.000đ"
+priceAmount: 399000
 priceNote: "License cá nhân, dùng vĩnh viễn + update miễn phí 1 năm"
-buyLink: "https://www.facebook.com/duckhoinghiep"
+transferContent: "MUA DUCOPC STUDIO"
 buyLabel: "Mua ngay"
 order: 2
 ---

@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import BuyButton from '../../components/BuyButton.astro';
 
 export async function getStaticPaths() {
   const products = await getCollection('products', ({ data }) => !data.draft);
@@ -37,25 +38,28 @@ const status = STATUS_LABEL[d.status];
     <p style="font-size: 1.1rem; opacity: 0.85; margin-top: 0.25rem;">{d.description}</p>
 
     {
-      (d.price || d.buyLink) && (
+      (d.price || d.priceAmount) && (
         <div class="buy-card">
-          {d.price && (
-            <div class="buy-price-block">
-              <span class="buy-price">{d.price}</span>
-              {d.priceNote && <span class="buy-price-note">{d.priceNote}</span>}
-            </div>
-          )}
-          {d.buyLink && (
+          <div class="buy-price-block">
+            {d.price && <span class="buy-price">{d.price}</span>}
+            {d.priceNote && <span class="buy-price-note">{d.priceNote}</span>}
+          </div>
+          {d.priceAmount ? (
+            <BuyButton
+              productSlug={product.slug}
+              productTitle={d.title}
+              amount={d.priceAmount}
+              transferContent={d.transferContent}
+              label={d.buyLabel}
+              buttonClass="btn-buy-large"
+            />
+          ) : d.buyLink ? (
             <a href={d.buyLink} target={d.buyLink.startsWith('http') ? '_blank' : undefined}
                rel={d.buyLink.startsWith('http') ? 'noopener noreferrer' : undefined}
                class="btn-buy-large">
               {d.buyLabel}
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:0.4rem;">
-                <path d="M5 12h14" /><path d="M13 6l6 6l-6 6" />
-              </svg>
             </a>
-          )}
+          ) : null}
         </div>
       )
     }
@@ -64,11 +68,16 @@ const status = STATUS_LABEL[d.status];
     <Content />
 
     {
-      d.buyLink && (
+      d.priceAmount && (
         <div style="text-align: center; margin: 3rem 0 1rem 0;">
-          <a href={d.buyLink} target="_blank" rel="noopener noreferrer" class="btn-buy-large">
-            {d.buyLabel}
-          </a>
+          <BuyButton
+            productSlug={`${product.slug}-bottom`}
+            productTitle={d.title}
+            amount={d.priceAmount}
+            transferContent={d.transferContent}
+            label={d.buyLabel}
+            buttonClass="btn-buy-large"
+          />
         </div>
       )
     }

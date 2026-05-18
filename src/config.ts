@@ -13,6 +13,13 @@ export const SITE = {
   phone: '0834869558',
 };
 
+export const PAYMENT = {
+  account: '8352771',
+  bank: 'ACB',
+  accountName: 'NGUYEN THE DUC',
+  qrApi: 'https://qr.sepay.vn/img',
+};
+
 export const SOCIALS = [
   { name: 'Facebook', href: 'https://www.facebook.com/ductechla', linkTitle: 'Facebook cá nhân', active: true },
   { name: 'FacebookPage', href: 'https://www.facebook.com/duckhoinghiep', linkTitle: 'Facebook Page – Đức Khởi Nghiệp', active: true },

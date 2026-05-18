@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import BuyButton from '../../components/BuyButton.astro';
 import { getCollection } from 'astro:content';
 
 const all = await getCollection('products', ({ data }) => !data.draft);
@@ -45,13 +46,24 @@ const STATUS_LABEL: Record<string, { label: string; color: string }> = {
               </div>
             </a>
             {
-              p.data.buyLink && (
+              p.data.priceAmount ? (
+                <div class="product-cta">
+                  <BuyButton
+                    productSlug={p.slug}
+                    productTitle={p.data.title}
+                    amount={p.data.priceAmount}
+                    transferContent={p.data.transferContent}
+                    label={p.data.buyLabel}
+                    buttonClass="btn-buy"
+                  />
+                </div>
+              ) : p.data.buyLink ? (
                 <div class="product-cta">
                   <a href={p.data.buyLink} target="_blank" rel="noopener noreferrer" class="btn-buy">
                     {p.data.buyLabel}
                   </a>
                 </div>
-              )
+              ) : null
             }
           </li>
         );

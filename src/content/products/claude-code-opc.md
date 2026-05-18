@@ -4,9 +4,10 @@ description: Khoá học giúp bạn vận hành "doanh nghiệp 1 người" b�
 thumbnail: /products/claude-code-opc.jpg
 status: wip
 price: "499.000đ"
+priceAmount: 499000
 priceNote: "Ưu đãi early-bird, giá gốc 999.000đ"
-buyLink: "https://www.facebook.com/duckhoinghiep"
-buyLabel: "Đăng ký nhận thông báo"
+transferContent: "MUA CLAUDECODE OPC"
+buyLabel: "Mua ngay"
 order: 1
 ---
 
