@@ -49,4 +49,39 @@ không cần API key của Gemini hay Anthropic, không phụ thuộc cloud serv
 - ✅ Update miễn phí 1 năm
 - ✅ Hỗ trợ qua Zalo group VIP
 
+## 🎬 Showcase — video sinh từ ducopc Studio
+
+3 video dưới đây đều do ducopc Studio render hoàn toàn tự động — Claude Code viết script, slide HTML emit, Edge TTS sinh giọng, Playwright render thành MP4.
+
+<div class="video-showcase">
+  <figure class="video-card">
+    <video controls preload="metadata" playsinline>
+      <source src="/products/videos/ai-agents-revolution.mp4" type="video/mp4">
+      Trình duyệt không hỗ trợ video.
+    </video>
+    <figcaption>AI Agents Revolution</figcaption>
+  </figure>
+  <figure class="video-card">
+    <video controls preload="metadata" playsinline>
+      <source src="/products/videos/ai-tao-anh.mp4" type="video/mp4">
+      Trình duyệt không hỗ trợ video.
+    </video>
+    <figcaption>AI Tạo Ảnh — workflow thực chiến</figcaption>
+  </figure>
+  <figure class="video-card">
+    <video controls preload="metadata" playsinline>
+      <source src="/products/videos/prompt-engineering.mp4" type="video/mp4">
+      Trình duyệt không hỗ trợ video.
+    </video>
+    <figcaption>Prompt Engineering 101</figcaption>
+  </figure>
+</div>
+
+<p style="text-align: center; margin-top: 1.5rem;">
+  👉 Xem thêm 20+ video demo trên TikTok
+  <a href="https://www.tiktok.com/@ducopc" target="_blank" rel="noopener noreferrer">
+    <strong>@ducopc</strong>
+  </a>
+</p>
+
 Inbox [Facebook](https://www.facebook.com/duckhoinghiep) để nhận license + hướng dẫn cài.

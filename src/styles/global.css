@@ -668,6 +668,48 @@ hr {
   text-underline-offset: 3px;
 }
 
+/* === Video showcase === */
+
+.video-showcase {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.video-card {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.video-card video {
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  border-radius: 8px;
+  background: #000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  display: block;
+}
+
+.video-card figcaption {
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+@media (max-width: 640px) {
+  .video-showcase {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    max-width: 360px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
 /* === Sale banner & countdown === */
 
 .sale-banner {
