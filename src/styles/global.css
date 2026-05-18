@@ -1,5 +1,5 @@
 /* === Global styles, adapted from steipete.me ===
-   Font Atkinson Hyperlegible loaded từ Google Fonts trong BaseLayout.astro */
+   System font stack giống Tailwind v4 default — không cần load Google Fonts */
 
 :root,
 html[data-theme='light'] {
@@ -8,6 +8,11 @@ html[data-theme='light'] {
   --accent: #006cac;
   --muted: #e6e6e6;
   --border: #ece9e9;
+
+  --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
 }
 
 html[data-theme='dark'] {
@@ -33,8 +38,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  font-family: 'Atkinson Hyperlegible', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--font-sans);
   font-size: 18px;
   line-height: 1.65;
   color: var(--foreground);
@@ -341,7 +345,7 @@ hr {
   background: var(--muted);
   padding: 0.1em 0.3em;
   border-radius: 4px;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: 0.9em;
 }
 
