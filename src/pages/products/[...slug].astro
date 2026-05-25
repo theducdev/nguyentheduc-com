@@ -24,7 +24,8 @@ const STATUS_LABEL: Record<string, { label: string; color: string }> = {
 };
 const status = STATUS_LABEL[d.status];
 
-const saleActive = !!(d.saleEndsAt && d.saleEndsAt.getTime() > Date.now());
+const saleActive =
+  !!d.salePriceAmount && (!d.saleHardDeadline || d.saleHardDeadline.getTime() > Date.now());
 ---
 
 <BaseLayout
@@ -48,19 +49,18 @@ const saleActive = !!(d.saleEndsAt && d.saleEndsAt.getTime() > Date.now());
     </div>
     <p style="font-size: 1.1rem; opacity: 0.85; margin-top: 0.25rem;">{d.description}</p>
 
-    {saleActive && d.saleEndsAt && (
-      <SaleCountdown endsAt={d.saleEndsAt} note={d.saleNote} size="lg" />
+    {saleActive && (
+      <SaleCountdown hardDeadline={d.saleHardDeadline} size="lg" />
     )}
 
     {
       (d.price || d.priceAmount) && (
-        <div class="buy-card price-block" data-sale-ends={d.saleEndsAt?.toISOString()}>
+        <div class="buy-card price-block" data-sale-hard-deadline={d.saleHardDeadline?.toISOString() ?? ''}>
           <div class="buy-price-block">
             {saleActive && d.salePrice ? (
               <>
                 <span class="sale-only buy-sale-price">{d.salePrice}</span>
                 <span class="sale-only buy-old-price">{d.price}</span>
-                {d.saleNote && <span class="buy-price-note sale-only">{d.saleNote}</span>}
               </>
             ) : (
               <>
@@ -75,7 +75,7 @@ const saleActive = !!(d.saleEndsAt && d.saleEndsAt.getTime() > Date.now());
               productTitle={d.title}
               amount={d.priceAmount}
               saleAmount={d.salePriceAmount}
-              saleEndsAt={d.saleEndsAt}
+              saleHardDeadline={d.saleHardDeadline}
               transferContent={d.transferContent}
               label={d.buyLabel}
               buttonClass="btn-buy-large"
@@ -102,7 +102,7 @@ const saleActive = !!(d.saleEndsAt && d.saleEndsAt.getTime() > Date.now());
             productTitle={d.title}
             amount={d.priceAmount}
             saleAmount={d.salePriceAmount}
-            saleEndsAt={d.saleEndsAt}
+            saleHardDeadline={d.saleHardDeadline}
             transferContent={d.transferContent}
             label={d.buyLabel}
             buttonClass="btn-buy-large"

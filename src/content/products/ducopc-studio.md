@@ -8,8 +8,6 @@ priceAmount: 999000
 priceNote: "License cá nhân, dùng vĩnh viễn + update miễn phí 1 năm"
 salePrice: "499.000đ"
 salePriceAmount: 499000
-saleEndsAt: 2026-05-26T00:00:00+07:00
-saleNote: "Mua trước 26/05/2026 - giảm còn 499k"
 transferContent: "MUA DUCOPC STUDIO"
 buyLabel: "Mua ngay"
 order: 2

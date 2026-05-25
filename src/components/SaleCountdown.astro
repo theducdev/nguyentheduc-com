@@ -1,21 +1,19 @@
 ---
 interface Props {
-  endsAt: Date;
-  note?: string;
+  hardDeadline?: Date;
+  slotHours?: number;
   size?: 'sm' | 'md' | 'lg';
 }
 
-const { endsAt, note, size = 'md' } = Astro.props;
-const iso = endsAt.toISOString();
+const { hardDeadline, slotHours = 6, size = 'md' } = Astro.props;
 ---
 
-<div class={`sale-countdown sale-countdown-${size}`} data-sale-ends={iso}>
+<div
+  class={`sale-countdown sale-countdown-${size}`}
+  data-sale-rolling={String(slotHours)}
+  data-sale-hard-deadline={hardDeadline?.toISOString() ?? ''}
+>
   <span class="sale-badge">🔥 SALE</span>
-  {note && <span class="sale-note">{note}</span>}
-  <span class="countdown-time" aria-live="polite">
-    <span class="ct-unit"><strong data-d>0</strong><i>ngày</i></span>
-    <span class="ct-unit"><strong data-h>00</strong><i>giờ</i></span>
-    <span class="ct-unit"><strong data-m>00</strong><i>phút</i></span>
-    <span class="ct-unit"><strong data-s>00</strong><i>giây</i></span>
-  </span>
+  <span class="sale-deadline" data-sale-deadline-text>—</span>
+  <span class="sale-remaining" aria-live="polite" data-sale-remaining>—</span>
 </div>

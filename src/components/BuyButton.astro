@@ -6,7 +6,7 @@ interface Props {
   productTitle: string;
   amount: number;                       // giá gốc
   saleAmount?: number;                  // giá sale (nếu có)
-  saleEndsAt?: Date;
+  saleHardDeadline?: Date;              // sau ngày này sale tắt hẳn
   transferContent?: string;
   label?: string;
   buttonClass?: string;
@@ -17,7 +17,7 @@ const {
   productTitle,
   amount,
   saleAmount,
-  saleEndsAt,
+  saleHardDeadline,
   transferContent = `MUA ${productSlug.replace(/-/g, '').toUpperCase()}`,
   label = 'Mua ngay',
   buttonClass = 'btn-buy-large',
@@ -26,7 +26,7 @@ const {
 const buildQR = (amt: number) =>
   `${PAYMENT.qrApi}?acc=${PAYMENT.account}&bank=${PAYMENT.bank}&amount=${amt}&des=${encodeURIComponent(transferContent)}`;
 
-const isSaleActive = !!(saleAmount && saleEndsAt && saleEndsAt.getTime() > Date.now());
+const isSaleActive = !!saleAmount && (!saleHardDeadline || saleHardDeadline.getTime() > Date.now());
 const currentAmount = isSaleActive ? saleAmount! : amount;
 const currentQR = buildQR(currentAmount);
 const regularQR = buildQR(amount);
@@ -40,7 +40,7 @@ const dialogId = `buy-${productSlug}`;
 </button>
 
 <dialog id={dialogId} class="buy-modal" aria-label={`Mua ${productTitle}`}
-  data-sale-ends={saleEndsAt?.toISOString()}
+  data-sale-hard-deadline={saleHardDeadline?.toISOString() ?? ''}
   data-regular-amount={amount}
   data-sale-amount={saleAmount}
   data-regular-qr={regularQR}

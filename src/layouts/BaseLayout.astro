@@ -112,40 +112,70 @@ const mimeType =
         });
       }
 
-      // ===== Countdown + sale revert =====
+      // ===== Rolling countdown + hard-deadline revert =====
+      const TZ_OFFSET_MIN = 7 * 60; // Asia/Ho_Chi_Minh (UTC+7)
       const pad = (n: number) => String(n).padStart(2, '0');
 
-      function tickCountdowns() {
+      // Tính mốc kết thúc slot tiếp theo (vd slot 6h → 0:00, 6:00, 12:00, 18:00 giờ VN)
+      function nextSaleSlot(slotHours: number): number {
         const now = Date.now();
-        let anyExpired = false;
-        document.querySelectorAll<HTMLElement>('.sale-countdown[data-sale-ends]').forEach((el) => {
-          const ends = new Date(el.dataset.saleEnds || '').getTime();
-          const diff = ends - now;
-          if (diff <= 0) {
+        const tzNow = now + TZ_OFFSET_MIN * 60_000;
+        const slotMs = slotHours * 3_600_000;
+        const elapsed = ((tzNow % slotMs) + slotMs) % slotMs;
+        const remain = elapsed === 0 ? slotMs : slotMs - elapsed;
+        return now + remain;
+      }
+
+      function fmtDeadline(endsAt: number): string {
+        const now = Date.now();
+        const tzNow = new Date(now + TZ_OFFSET_MIN * 60_000);
+        const tzEnd = new Date(endsAt + TZ_OFFSET_MIN * 60_000);
+        const sameDay =
+          tzNow.getUTCFullYear() === tzEnd.getUTCFullYear() &&
+          tzNow.getUTCMonth() === tzEnd.getUTCMonth() &&
+          tzNow.getUTCDate() === tzEnd.getUTCDate();
+        // 00:00 ngày mai hiển thị là "00:00 ngày mai" cho dễ hiểu
+        const hh = pad(tzEnd.getUTCHours());
+        const mm = pad(tzEnd.getUTCMinutes());
+        return `Hết sale lúc ${hh}:${mm} ${sameDay ? 'hôm nay' : 'ngày mai'}`;
+      }
+
+      function fmtRemaining(ms: number): string {
+        const s = Math.max(0, Math.floor(ms / 1000));
+        const h = Math.floor(s / 3600);
+        const m = Math.floor((s % 3600) / 60);
+        const sec = s % 60;
+        if (h > 0) return `còn ${h}h ${pad(m)}p`;
+        if (m > 0) return `còn ${m}p ${pad(sec)}s`;
+        return `còn ${sec}s`;
+      }
+
+      function isHardDeadlinePassed(iso: string | undefined): boolean {
+        if (!iso) return false;
+        const t = new Date(iso).getTime();
+        return Number.isFinite(t) && t <= Date.now();
+      }
+
+      function tickCountdowns() {
+        // Update rolling countdown text
+        document.querySelectorAll<HTMLElement>('.sale-countdown[data-sale-rolling]').forEach((el) => {
+          const slot = parseInt(el.dataset.saleRolling || '6', 10) || 6;
+          const hardDeadline = el.dataset.saleHardDeadline;
+          if (isHardDeadlinePassed(hardDeadline)) {
             el.classList.add('expired');
-            el.style.display = 'none';
-            anyExpired = true;
             return;
           }
-          const d = Math.floor(diff / 86400000);
-          const h = Math.floor((diff % 86400000) / 3600000);
-          const m = Math.floor((diff % 3600000) / 60000);
-          const s = Math.floor((diff % 60000) / 1000);
-          const dEl = el.querySelector('[data-d]');
-          const hEl = el.querySelector('[data-h]');
-          const mEl = el.querySelector('[data-m]');
-          const sEl = el.querySelector('[data-s]');
-          if (dEl) dEl.textContent = String(d);
-          if (hEl) hEl.textContent = pad(h);
-          if (mEl) mEl.textContent = pad(m);
-          if (sEl) sEl.textContent = pad(s);
+          const ends = nextSaleSlot(slot);
+          const remain = ends - Date.now();
+          const deadlineEl = el.querySelector<HTMLElement>('[data-sale-deadline-text]');
+          const remainEl = el.querySelector<HTMLElement>('[data-sale-remaining]');
+          if (deadlineEl) deadlineEl.textContent = fmtDeadline(ends);
+          if (remainEl) remainEl.textContent = fmtRemaining(remain);
         });
 
-        // Revert sale UI / QR if expired (idempotent)
-        document.querySelectorAll<HTMLElement>('[data-sale-ends]').forEach((el) => {
-          const ends = new Date(el.dataset.saleEnds || '').getTime();
-          if (ends - now > 0) return;
-          // Mark expired
+        // Revert sale UI / QR if hard deadline passed (idempotent)
+        document.querySelectorAll<HTMLElement>('[data-sale-hard-deadline]').forEach((el) => {
+          if (!isHardDeadlinePassed(el.dataset.saleHardDeadline)) return;
           el.classList.add('sale-expired');
           // Swap QR + amount in BuyButton dialogs
           if (el.tagName === 'DIALOG') {
@@ -158,12 +188,6 @@ const mimeType =
               amt.textContent = parseInt(regularAmount, 10).toLocaleString('vi-VN') + 'đ';
             }
           }
-        });
-
-        // Toggle sale-price / regular-price displays anywhere
-        document.querySelectorAll<HTMLElement>('.price-block[data-sale-ends]').forEach((el) => {
-          const ends = new Date(el.dataset.saleEnds || '').getTime();
-          if (ends - now <= 0) el.classList.add('sale-expired');
         });
       }
 
