@@ -14,14 +14,19 @@ const STATUS_LABEL: Record<string, { label: string; color: string }> = {
   paused: { label: 'Tạm dừng', color: '#6b7280' },
 };
 
-// Check if any product has sale active for banner
+// Sale active = có salePriceAmount + chưa qua hard deadline (nếu có)
 const now = Date.now();
-const hasAnySale = sorted.some(
-  (p) => p.data.saleEndsAt && p.data.saleEndsAt.getTime() > now,
-);
-const earliestSaleEnd = sorted
-  .filter((p) => p.data.saleEndsAt && p.data.saleEndsAt.getTime() > now)
-  .sort((a, b) => a.data.saleEndsAt!.getTime() - b.data.saleEndsAt!.getTime())[0]?.data.saleEndsAt;
+const isSaleLive = (p: typeof sorted[number]) =>
+  !!p.data.salePriceAmount &&
+  (!p.data.saleHardDeadline || p.data.saleHardDeadline.getTime() > now);
+const hasAnySale = sorted.some(isSaleLive);
+// Lấy giá sale chung (giả định 2 SP cùng giá; nếu khác thì lấy min để banner không lừa)
+const bannerSalePrice = sorted.find(isSaleLive)?.data.salePrice;
+// Hard deadline sớm nhất (nếu có) — dùng để revert banner khi qua
+const earliestHardDeadline = sorted
+  .filter((p) => isSaleLive(p) && p.data.saleHardDeadline)
+  .sort((a, b) => a.data.saleHardDeadline!.getTime() - b.data.saleHardDeadline!.getTime())[0]
+  ?.data.saleHardDeadline;
 ---
 
 <BaseLayout title="Sản phẩm | Nguyễn Thế Đức" description="Các sản phẩm và dự án của Nguyễn Thế Đức.">
@@ -29,14 +34,14 @@ const earliestSaleEnd = sorted
   <p class="page-subheading">Những sản phẩm và công cụ mình đang xây.</p>
 
   {
-    hasAnySale && earliestSaleEnd && (
-      <div class="sale-banner">
+    hasAnySale && (
+      <div class="sale-banner" data-sale-hard-deadline={earliestHardDeadline?.toISOString() ?? ''}>
         <div class="sale-banner-inner">
           <div class="sale-banner-text">
             <strong>🎉 Ưu đãi ra mắt</strong>
-            <p>Tất cả sản phẩm chỉ <strong class="sale-banner-price">499.000đ</strong> khi đăng ký trước 26/05/2026</p>
+            <p>Tất cả sản phẩm chỉ <strong class="sale-banner-price">{bannerSalePrice}</strong></p>
           </div>
-          <SaleCountdown endsAt={earliestSaleEnd} size="md" />
+          <SaleCountdown hardDeadline={earliestHardDeadline} size="md" />
         </div>
       </div>
     )
@@ -47,7 +52,7 @@ const earliestSaleEnd = sorted
       sorted.map((p) => {
         const status = STATUS_LABEL[p.data.status];
         const detailHref = `/products/${p.slug}`;
-        const saleActive = p.data.saleEndsAt && p.data.saleEndsAt.getTime() > now;
+        const saleActive = isSaleLive(p);
         return (
           <li class="product-item">
             <a href={detailHref} class="product-link">
@@ -62,7 +67,7 @@ const earliestSaleEnd = sorted
                 <p class="product-desc">{p.data.description}</p>
                 {
                   p.data.price && (
-                    <div class="price-block" data-sale-ends={p.data.saleEndsAt?.toISOString()}>
+                    <div class="price-block" data-sale-hard-deadline={p.data.saleHardDeadline?.toISOString() ?? ''}>
                       {saleActive && p.data.salePrice ? (
                         <>
                           <span class="sale-only product-sale-price">{p.data.salePrice}</span>
@@ -87,7 +92,7 @@ const earliestSaleEnd = sorted
                     productTitle={p.data.title}
                     amount={p.data.priceAmount}
                     saleAmount={p.data.salePriceAmount}
-                    saleEndsAt={p.data.saleEndsAt}
+                    saleHardDeadline={p.data.saleHardDeadline}
                     transferContent={p.data.transferContent}
                     label={p.data.buyLabel}
                     buttonClass="btn-buy"
