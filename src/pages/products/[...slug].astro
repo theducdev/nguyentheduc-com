@@ -87,6 +87,7 @@ const saleActive =
               {d.buyLabel}
             </a>
           ) : null}
+          {d.ctaNote && <p class="buy-cta-note">{d.ctaNote}</p>}
         </div>
       )
     }
@@ -107,6 +108,7 @@ const saleActive =
             label={d.buyLabel}
             buttonClass="btn-buy-large"
           />
+          {d.ctaNote && <p class="buy-cta-note buy-cta-note-bottom">{d.ctaNote}</p>}
         </div>
       )
     }

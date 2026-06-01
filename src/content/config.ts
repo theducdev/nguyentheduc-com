@@ -29,6 +29,7 @@ const products = defineCollection({
     transferContent: z.string().optional(),
     buyLink: z.string().optional(),
     buyLabel: z.string().default('Mua ngay'),
+    ctaNote: z.string().optional(),
     externalLink: z.string().optional(),
     order: z.number().default(99),
     draft: z.boolean().default(false),
