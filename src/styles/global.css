@@ -379,6 +379,25 @@ hr {
   margin: 1.5rem 0;
 }
 
+.testimonial-screenshot {
+  margin: 1.5rem 0 2rem;
+}
+
+.testimonial-screenshot img {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.12);
+}
+
+.testimonial-screenshot figcaption {
+  margin-top: 0.65rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  opacity: 0.75;
+  text-align: center;
+}
+
 /* === Products list === */
 
 .product-list {

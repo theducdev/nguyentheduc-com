@@ -29,6 +29,17 @@ Thay vì chỉ học lý thuyết, bạn sẽ thấy cách Claude Code biến m�
   ></iframe>
 </div>
 
+## Feedback từ học viên
+
+<figure class="testimonial-screenshot">
+  <img
+    src="/products/claude-code-opc-feedback.png"
+    alt="Feedback tích cực của học viên về khóa Claude Code OPC"
+    loading="lazy"
+  />
+  <figcaption>Feedback của học viên sau khi thực hành workflow với GPT, Claude Code, 9router và Codex.</figcaption>
+</figure>
+
 ## Học xong làm được gì?
 
 Sau khóa học, mục tiêu không phải là "biết thêm một công cụ AI". Mục tiêu là bạn có thể tự làm được việc thật:
